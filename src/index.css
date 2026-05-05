@@ -1,21 +1,65 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
+  /* ── Typography ── */
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  /* ── Text ── */
+  --text: #6C6C6C;          /* основной текст */
+  --text-muted: #E0E0E0;    /* второстепенный / подписи */
+  --text-h: #232323;        /* заголовки */
+
+  /* ── Backgrounds ── */
+  --bg: #ffffff;            /* поверхность (карточки, инпуты) */
+  --bg-page: #f3f4f6;       /* фон страницы */
+  --bg-subtle: #f9fafb;     /* слабо выделенные зоны */
+
+  /* ── Primary (синий из кнопки «Войти» и ссылки «Создать») ── */
+  --primary: #242EDB;
+  --primary-hover: #2a47f0;
+  --primary-bg: rgba(59, 91, 255, 0.1);
+  --primary-border: rgba(59, 91, 255, 0.4);
+
+  /* ── Accent (фиолетовый, уже использовался) ── */
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* ── Borders ── */
+  --border: #e5e7eb;        /* стандартная граница */
+  --border-strong: #d1d5db; /* усиленная (чекбокс, разделители) */
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow:    0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  /* ── Border radius ── */
+  --radius-sm: 6px;
+  --radius:    10px;        /* инпуты, небольшие блоки */
+  --radius-md: 12px;        /* кнопки */
+  --radius-lg: 20px;        /* карточки */
+  --radius-full: 9999px;    /* пилюли, аватары */
+
+  /* ── Spacing scale ── */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+
+  /* ── Transitions ── */
+  --transition: 0.15s ease;
+
+  /* ── Legacy (обратная совместимость) ── */
+  --code-bg: #f4f3ec;
+  --social-bg: rgba(244, 243, 236, 0.5);
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
@@ -35,16 +79,31 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
+    --text-muted: #6b7280;
     --text-h: #f3f4f6;
+
     --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
+    --bg-page: #0e0f14;
+    --bg-subtle: #1f2028;
+
+    --primary: #5b7fff;
+    --primary-hover: #4a6aff;
+    --primary-bg: rgba(91, 127, 255, 0.15);
+    --primary-border: rgba(91, 127, 255, 0.4);
+
     --accent: #c084fc;
     --accent-bg: rgba(192, 132, 252, 0.15);
     --accent-border: rgba(192, 132, 252, 0.5);
+
+    --border: #2e303a;
+    --border-strong: #3d3f4d;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow:    0 4px 16px rgba(0, 0, 0, 0.4),  0 2px 6px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 32px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    --code-bg: #1f2028;
     --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
 
   #social .button-icon {
