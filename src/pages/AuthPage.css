@@ -156,6 +156,18 @@
   color: #6b7280;
 }
 
+/* ── Error message ── */
+.auth-error {
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
 /* ── Submit button ── */
 .auth-submit {
   width: 100%;
@@ -179,6 +191,12 @@
 
 .auth-submit:active {
   transform: scale(0.98);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* ── Divider ── */

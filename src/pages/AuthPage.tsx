@@ -1,17 +1,29 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { login as apiLogin } from '../api/authApi'
 import './AuthPage.css'
 
 export default function AuthPage() {
   const navigate = useNavigate()
-  const [login, setLogin] = useState('')
+  const [loginValue, setLoginValue] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [remember, setRemember] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    navigate('/products')
+    setError(null)
+    setLoading(true)
+    try {
+      await apiLogin(loginValue, password)
+      navigate('/products')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ошибка авторизации')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -53,15 +65,15 @@ export default function AuthPage() {
                 type="text"
                 autoComplete="username"
                 placeholder="Введите логин"
-                value={login}
-                onChange={e => setLogin(e.target.value)}
+                value={loginValue}
+                onChange={e => setLoginValue(e.target.value)}
                 required
               />
-              {login && (
+              {loginValue && (
                 <button
                   type="button"
                   className="auth-input-action"
-                  onClick={() => setLogin('')}
+                  onClick={() => setLoginValue('')}
                   aria-label="Очистить"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -125,7 +137,10 @@ export default function AuthPage() {
           </label>
 
           {/* Submit */}
-          <button type="submit" className="auth-submit">Войти</button>
+          {error && <p className="auth-error">{error}</p>}
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? 'Входим...' : 'Войти'}
+          </button>
 
         </form>
 
