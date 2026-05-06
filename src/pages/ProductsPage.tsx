@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getProducts, type Product } from '../api/productsApi'
+import Icon from '../components/Icon'
 import './ProductsPage.css'
 
 const PER_PAGE = 20
@@ -93,9 +94,7 @@ export default function ProductsPage() {
       <header className="products-header">
         <h1 className="products-header__title">Товары</h1>
         <form className="products-header__search" onSubmit={handleSearch}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
+          <Icon name="search" size={16} aria-hidden="true" />
           <input
             type="search"
             placeholder="Найти"
@@ -115,15 +114,10 @@ export default function ProductsPage() {
               aria-label="Обновить"
               onClick={() => setRefreshKey(k => k + 1)}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
-                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-              </svg>
+              <Icon name="refresh" size={18} />
             </button>
             <button className="products-toolbar__add">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
-              </svg>
+              <Icon name="plus-circle" size={16} />
               Добавить
             </button>
           </div>
@@ -196,14 +190,10 @@ export default function ProductsPage() {
                     </td>
                     <td className="col-actions" onClick={e => e.stopPropagation()}>
                       <button className="btn-add" aria-label="Добавить в корзину">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-                        </svg>
+                        <Icon name="plus" size={16} />
                       </button>
                       <button className="btn-more" aria-label="Ещё">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                          <circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/>
-                        </svg>
+                        <Icon name="more-horizontal" size={16} />
                       </button>
                     </td>
                   </tr>
@@ -225,9 +215,7 @@ export default function ProductsPage() {
               onClick={() => setCurrentPage(p => p - 1)}
               aria-label="Назад"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6"/>
-              </svg>
+              <Icon name="chevron-left" size={16} />
             </button>
             {pageButtons.map(page => (
               <button
@@ -244,9 +232,7 @@ export default function ProductsPage() {
               onClick={() => setCurrentPage(p => p + 1)}
               aria-label="Вперёд"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"/>
-              </svg>
+              <Icon name="chevron-right" size={16} />
             </button>
           </div>
         </div>

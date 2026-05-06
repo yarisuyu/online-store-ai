@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login as apiLogin } from '../api/authApi'
+import Icon from '../components/Icon'
 import './AuthPage.css'
 
 export default function AuthPage() {
@@ -46,13 +47,7 @@ export default function AuthPage() {
 
         {/* Icon */}
         <div className="auth-icon-wrap">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M2 10v4h3l4 4V6L5 10H2zm13.07-2.07a7 7 0 0 1 0 8.14M17.95 5.05a11 11 0 0 1 0 13.9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-            <rect x="1" y="10" width="3" height="4" rx="0.5" fill="currentColor"/>
-            <path d="M9 6.5v11l-4-4H2v-3h3l4-4z" fill="currentColor"/>
-            <path d="M15.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-            <path d="M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-          </svg>
+          <Icon name="logo" size={32} aria-hidden="true" />
         </div>
 
         {/* Heading */}
@@ -69,10 +64,7 @@ export default function AuthPage() {
             <label htmlFor="login">Логин</label>
             <div className={`auth-input-wrap${fieldErrors.login ? ' auth-input-wrap--error' : ''}`}>
               <span className="auth-input-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="8" r="4"/>
-                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                </svg>
+                <Icon name="user" size={18} />
               </span>
               <input
                 id="login"
@@ -89,10 +81,7 @@ export default function AuthPage() {
                 onClick={() => setLoginValue('')}
                 aria-label="Очистить"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <line x1="18" y1="6" x2="6" y2="18"/>
-                  <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
+                <Icon name="x" size={16} />
               </button>
 
             </div>
@@ -104,10 +93,7 @@ export default function AuthPage() {
             <label htmlFor="password">Пароль</label>
             <div className={`auth-input-wrap${fieldErrors.password ? ' auth-input-wrap--error' : ''}`}>
               <span className="auth-input-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
+                <Icon name="lock" size={18} />
               </span>
               <input
                 id="password"
@@ -124,16 +110,9 @@ export default function AuthPage() {
                 aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
               >
                 {showPassword ? (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-                    <line x1="1" y1="1" x2="23" y2="23"/>
-                  </svg>
+                  <Icon name="eye-off" size={18} />
                 ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
+                  <Icon name="eye" size={18} />
                 )}
               </button>
             </div>
