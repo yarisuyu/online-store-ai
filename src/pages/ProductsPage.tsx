@@ -25,6 +25,21 @@ export default function ProductsPage() {
   const [selected, setSelected] = useState<Set<number>>(new Set())
   const [refreshKey, setRefreshKey] = useState(0)
 
+  type SortKey = 'title' | 'brand' | 'rating' | 'price'
+  type SortDir = 'asc' | 'desc'
+  const [sortKey, setSortKey] = useState<SortKey | null>(null)
+  const [sortDir, setSortDir] = useState<SortDir>('asc')
+
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
+    } else {
+      setSortKey(key)
+      setSortDir('asc')
+    }
+    setCurrentPage(1)
+  }
+
   const totalPages = Math.ceil(total / PER_PAGE)
   const from = total === 0 ? 0 : (currentPage - 1) * PER_PAGE + 1
   const to = Math.min(currentPage * PER_PAGE, total)
@@ -36,7 +51,7 @@ export default function ProductsPage() {
       setLoading(true)
       setError(null)
       try {
-        const data = await getProducts(currentPage, PER_PAGE, search)
+        const data = await getProducts(currentPage, PER_PAGE, search, sortKey, sortDir)
         if (!cancelled) {
           setProducts(data.products)
           setTotal(data.total)
@@ -53,7 +68,7 @@ export default function ProductsPage() {
 
     load()
     return () => { cancelled = true }
-  }, [currentPage, search, refreshKey])
+  }, [currentPage, search, sortKey, sortDir, refreshKey])
 
   // Reset to page 1 on new search
   const handleSearch = (e: React.FormEvent) => {
@@ -134,11 +149,31 @@ export default function ProductsPage() {
                 <th className="col-check">
                   <input type="checkbox" checked={allChecked} onChange={toggleAll} aria-label="Выбрать все" />
                 </th>
-                <th className="col-name">Наименование</th>
-                <th className="col-vendor">Вендор</th>
+                <th className="col-name" onClick={() => handleSort('title')}>
+                  <div className="col-sortable">
+                    <span>Наименование</span>
+                    <Icon name={sortKey === 'title' ? (sortDir === 'asc' ? 'chevron-up' : 'chevron-down') : 'chevron-up'} size={14} className={sortKey === 'title' ? 'sort-icon sort-icon--active' : 'sort-icon'} />
+                  </div>
+                </th>
+                <th className="col-vendor" onClick={() => handleSort('brand')}>
+                  <div className="col-sortable col-sortable--center">
+                    <span>Вендор</span>
+                    <Icon name={sortKey === 'brand' ? (sortDir === 'asc' ? 'chevron-up' : 'chevron-down') : 'chevron-up'} size={14} className={sortKey === 'brand' ? 'sort-icon sort-icon--active' : 'sort-icon'} />
+                  </div>
+                </th>
                 <th className="col-article">Артикул</th>
-                <th className="col-rating">Оценка</th>
-                <th className="col-price">Цена, ₽</th>
+                <th className="col-rating" onClick={() => handleSort('rating')}>
+                  <div className="col-sortable col-sortable--center">
+                    <span>Оценка</span>
+                    <Icon name={sortKey === 'rating' ? (sortDir === 'asc' ? 'chevron-up' : 'chevron-down') : 'chevron-up'} size={14} className={sortKey === 'rating' ? 'sort-icon sort-icon--active' : 'sort-icon'} />
+                  </div>
+                </th>
+                <th className="col-price" onClick={() => handleSort('price')}>
+                  <div className="col-sortable col-sortable--center">
+                    <span>Цена, ₽</span>
+                    <Icon name={sortKey === 'price' ? (sortDir === 'asc' ? 'chevron-up' : 'chevron-down') : 'chevron-up'} size={14} className={sortKey === 'price' ? 'sort-icon sort-icon--active' : 'sort-icon'} />
+                  </div>
+                </th>
                 <th className="col-actions"></th>
               </tr>
             </thead>
@@ -170,7 +205,7 @@ export default function ProductsPage() {
                           alt={product.title}
                           loading="lazy"
                         />
-                        <div>
+                        <div className="text-left">
                           <div className="product-name">{product.title}</div>
                           <div className="product-category">{product.category}</div>
                         </div>

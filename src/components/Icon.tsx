@@ -13,6 +13,8 @@ import PlusIcon from '../assets/icons/plus.svg?react'
 import MoreHorizontalIcon from '../assets/icons/more-horizontal.svg?react'
 import ChevronLeftIcon from '../assets/icons/chevron-left.svg?react'
 import ChevronRightIcon from '../assets/icons/chevron-right.svg?react'
+import ChevronUpIcon from '../assets/icons/chevron-up.svg?react'
+import ChevronDownIcon from '../assets/icons/chevron-down.svg?react'
 
 const iconMap = {
   logo: LogoIcon,
@@ -28,6 +30,8 @@ const iconMap = {
   'more-horizontal': MoreHorizontalIcon,
   'chevron-left': ChevronLeftIcon,
   'chevron-right': ChevronRightIcon,
+  'chevron-up': ChevronUpIcon,
+  'chevron-down': ChevronDownIcon,
 } as const
 
 export type IconName = keyof typeof iconMap

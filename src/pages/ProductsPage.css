@@ -163,11 +163,66 @@
 
 .products-table thead th {
   padding: 0.875rem 1rem;
-  text-align: left;
+  text-align: center;
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+.products-table thead th.col-name {
+  text-align: left;
+}
+
+.products-table thead th[onClick] {
+  cursor: pointer;
+  user-select: none;
+}
+
+.products-table thead th[onClick]:hover {
+  color: var(--text-h);
+}
+
+.col-sortable {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.col-sortable--center {
+  justify-content: center;
+  width: 100%;
+}
+
+.col-name.col-sortable {
+  justify-content: flex-start;
+}
+
+.col-sortable > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.col-sortable:hover {
+  color: var(--text-h);
+}
+
+.sort-icon {
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.col-sortable:hover .sort-icon {
+  opacity: 0.4;
+}
+
+.sort-icon--active {
+  opacity: 1 !important;
+  color: var(--primary);
 }
 
 /* Body rows */
