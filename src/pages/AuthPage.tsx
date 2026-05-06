@@ -11,9 +11,23 @@ export default function AuthPage() {
   const [remember, setRemember] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<{ login?: string; password?: string }>({})
+
+  const validate = () => {
+    const errors: { login?: string; password?: string } = {}
+    if (!loginValue.trim()) errors.login = 'Поле обязательно для заполнения'
+    if (!password.trim()) errors.password = 'Поле обязательно для заполнения'
+    return errors
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const errors = validate()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
+    setFieldErrors({})
     setError(null)
     setLoading(true)
     try {
@@ -53,7 +67,7 @@ export default function AuthPage() {
           {/* Login field */}
           <div className="auth-field">
             <label htmlFor="login">Логин</label>
-            <div className="auth-input-wrap">
+            <div className={`auth-input-wrap${fieldErrors.login ? ' auth-input-wrap--error' : ''}`}>
               <span className="auth-input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="8" r="4"/>
@@ -66,29 +80,29 @@ export default function AuthPage() {
                 autoComplete="username"
                 placeholder="Введите логин"
                 value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
-                required
+                onChange={e => { setLoginValue(e.target.value); if (fieldErrors.login) setFieldErrors(p => ({ ...p, login: undefined })) }}
               />
-              {loginValue && (
-                <button
-                  type="button"
-                  className="auth-input-action"
-                  onClick={() => setLoginValue('')}
-                  aria-label="Очистить"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                  </svg>
-                </button>
-              )}
+
+              <button
+                type="button"
+                className="auth-input-action"
+                onClick={() => setLoginValue('')}
+                aria-label="Очистить"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+
             </div>
+            {fieldErrors.login && <span className="auth-field-error">{fieldErrors.login}</span>}
           </div>
 
           {/* Password field */}
           <div className="auth-field">
             <label htmlFor="password">Пароль</label>
-            <div className="auth-input-wrap">
+            <div className={`auth-input-wrap${fieldErrors.password ? ' auth-input-wrap--error' : ''}`}>
               <span className="auth-input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2"/>
@@ -101,8 +115,7 @@ export default function AuthPage() {
                 autoComplete="current-password"
                 placeholder="Введите пароль"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
+                onChange={e => { setPassword(e.target.value); if (fieldErrors.password) setFieldErrors(p => ({ ...p, password: undefined })) }}
               />
               <button
                 type="button"
@@ -124,6 +137,7 @@ export default function AuthPage() {
                 )}
               </button>
             </div>
+            {fieldErrors.password && <span className="auth-field-error">{fieldErrors.password}</span>}
           </div>
 
           {/* Remember me */}
