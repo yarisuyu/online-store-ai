@@ -42,3 +42,27 @@ export async function getProducts(
 
   return res.json()
 }
+
+export interface NewProduct {
+  title: string
+  price: number
+  brand: string
+  sku: string
+}
+
+export async function addProduct(data: NewProduct): Promise<Product> {
+  const token = getAccessToken()
+
+  const res = await fetch('https://dummyjson.com/products/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!res.ok) throw new Error('Не удалось добавить товар')
+
+  return res.json()
+}

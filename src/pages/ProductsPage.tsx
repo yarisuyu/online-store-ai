@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { getProducts, type Product } from '../api/productsApi'
 import Icon from '../components/Icon'
+import AddProductModal from '../components/AddProductModal'
+import Toast from '../components/Toast'
 import './ProductsPage.css'
 
 const PER_PAGE = 20
@@ -24,6 +26,8 @@ export default function ProductsPage() {
   const [error, setError] = useState<string | null>(null)
   const [selected, setSelected] = useState<Set<number>>(new Set())
   const [refreshKey, setRefreshKey] = useState(0)
+  const [showModal, setShowModal] = useState(false)
+  const [toast, setToast] = useState<string | null>(null)
 
   type SortKey = 'title' | 'brand' | 'rating' | 'price'
   type SortDir = 'asc' | 'desc'
@@ -131,7 +135,7 @@ export default function ProductsPage() {
             >
               <Icon name="refresh" size={18} />
             </button>
-            <button className="products-toolbar__add">
+            <button className="products-toolbar__add" onClick={() => setShowModal(true)}>
               <Icon name="plus-circle" size={16} />
               Добавить
             </button>
@@ -272,6 +276,20 @@ export default function ProductsPage() {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <AddProductModal
+          onClose={() => setShowModal(false)}
+          onSuccess={() => {
+            setShowModal(false)
+            setToast('Товар успешно добавлен')
+            setRefreshKey(k => k + 1)
+          }}
+        />
+      )}
+
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
+
     </div>
   )
 }
