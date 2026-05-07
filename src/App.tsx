@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import AuthPage from './pages/AuthPage'
 import ProductsPage from './pages/ProductsPage'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/auth" replace />} />
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products" element={<ProtectedRoute><ProductsPage /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )

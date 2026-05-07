@@ -7,6 +7,9 @@ import './ProductsPage.css'
 
 const PER_PAGE = 20
 
+type SortKey = 'title' | 'brand' | 'rating' | 'price'
+type SortDir = 'asc' | 'desc'
+
 function formatPrice(price: number) {
   const rounded = Math.round(price)
   const str = rounded.toString()
@@ -29,8 +32,6 @@ export default function ProductsPage() {
   const [showModal, setShowModal] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
 
-  type SortKey = 'title' | 'brand' | 'rating' | 'price'
-  type SortDir = 'asc' | 'desc'
   const [sortKey, setSortKey] = useState<SortKey | null>(null)
   const [sortDir, setSortDir] = useState<SortDir>('asc')
 
@@ -224,7 +225,7 @@ export default function ProductsPage() {
                       <span className="rating-max">/5</span>
                     </td>
                     <td className="col-price">
-                      <span className="price-main">{main}&nbsp;{tail}</span>
+                      <span className="price-main">{main ? `${main}\u00a0${tail}` : tail}</span>
                       <span className="price-cents">,{cents}</span>
                     </td>
                     <td className="col-actions" onClick={e => e.stopPropagation()}>

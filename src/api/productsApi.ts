@@ -4,7 +4,7 @@ export interface Product {
   id: number
   title: string
   category: string
-  brand: string
+  brand: string | undefined
   sku: string
   rating: number
   price: number

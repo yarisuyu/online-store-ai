@@ -13,12 +13,11 @@ export interface LoginError {
   message: string
 }
 
-export async function login(username: string, password: string): Promise<AuthUser> {
+export async function login(username: string, password: string, remember = false): Promise<AuthUser> {
   const res = await fetch('https://dummyjson.com/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password, expiresInMins: 60 }),
-    credentials: 'include',
   })
 
   const data = await res.json()
@@ -27,9 +26,10 @@ export async function login(username: string, password: string): Promise<AuthUse
     throw new Error(data.message ?? 'Ошибка авторизации')
   }
 
-  // Persist tokens in localStorage
-  localStorage.setItem('accessToken', data.accessToken)
-  localStorage.setItem('refreshToken', data.refreshToken)
+  // Persist tokens: sessionStorage when not remembered, localStorage when remembered
+  const storage = remember ? localStorage : sessionStorage
+  storage.setItem('accessToken', data.accessToken)
+  storage.setItem('refreshToken', data.refreshToken)
 
   return data as AuthUser
 }
@@ -37,8 +37,10 @@ export async function login(username: string, password: string): Promise<AuthUse
 export function logout() {
   localStorage.removeItem('accessToken')
   localStorage.removeItem('refreshToken')
+  sessionStorage.removeItem('accessToken')
+  sessionStorage.removeItem('refreshToken')
 }
 
 export function getAccessToken(): string | null {
-  return localStorage.getItem('accessToken')
+  return localStorage.getItem('accessToken') ?? sessionStorage.getItem('accessToken')
 }

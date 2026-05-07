@@ -32,7 +32,7 @@ export default function AuthPage() {
     setError(null)
     setLoading(true)
     try {
-      await apiLogin(loginValue, password)
+      await apiLogin(loginValue, password, remember)
       navigate('/products')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ошибка авторизации')
@@ -75,14 +75,16 @@ export default function AuthPage() {
                 onChange={e => { setLoginValue(e.target.value); if (fieldErrors.login) setFieldErrors(p => ({ ...p, login: undefined })) }}
               />
 
-              <button
-                type="button"
-                className="auth-input-action"
-                onClick={() => setLoginValue('')}
-                aria-label="Очистить"
-              >
-                <Icon name="x" size={16} />
-              </button>
+              {loginValue && (
+                <button
+                  type="button"
+                  className="auth-input-action"
+                  onClick={() => setLoginValue('')}
+                  aria-label="Очистить"
+                >
+                  <Icon name="x" size={16} />
+                </button>
+              )}
 
             </div>
             {fieldErrors.login && <span className="auth-field-error">{fieldErrors.login}</span>}

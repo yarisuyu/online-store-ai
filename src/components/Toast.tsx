@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Toast.css'
 
 export interface ToastProps {
@@ -9,23 +9,22 @@ export interface ToastProps {
 
 export default function Toast({ message, duration = 3000, onClose }: ToastProps) {
   const [visible, setVisible] = useState(false)
+  const onCloseRef = useRef(onClose)
 
   useEffect(() => {
-    // Trigger enter animation
+    onCloseRef.current = onClose
+  }, [onClose])
+
+  useEffect(() => {
     const show = requestAnimationFrame(() => setVisible(true))
-
-    const hide = setTimeout(() => {
-      setVisible(false)
-    }, duration - 300)
-
-    const close = setTimeout(onClose, duration)
-
+    const hide = setTimeout(() => setVisible(false), duration - 300)
+    const close = setTimeout(() => onCloseRef.current(), duration)
     return () => {
       cancelAnimationFrame(show)
       clearTimeout(hide)
       clearTimeout(close)
     }
-  }, [duration, onClose])
+  }, [duration])
 
   return (
     <div className={`toast ${visible ? 'toast--visible' : ''}`} role="status" aria-live="polite">
